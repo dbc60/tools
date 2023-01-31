@@ -1,0 +1,50 @@
+---
+Language: Cpp
+# A style complying with the LLVM coding standards (See https://llvm.org/docs/CodingStandards.html).
+BasedOnStyle: LLVM
+AlignConsecutiveMacros: Consecutive
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveDeclarations: Consecutive
+AlignEscapedNewlines: Left
+AllowAllArgumentsOnNextLine: false
+AllowShortFunctionsOnASingleLine: None
+AlwaysBreakAfterReturnType: All
+AlwaysBreakBeforeMultilineStrings: false
+BinPackParameters: false
+BreakBeforeBinaryOperators: All
+BreakInheritanceList: BeforeComma
+BreakConstructorInitializers: BeforeComma
+BreakStringLiterals: true
+ColumnLimit: 120
+DerivePointerAlignment: false
+IndentCaseLabels: false
+IndentWidth: 4
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 2
+PenaltyBreakAssignment: 2
+PenaltyBreakBeforeFirstCallParameter: 19
+PenaltyBreakComment: 300
+PenaltyBreakFirstLessLess: 120
+PenaltyBreakString: 1000
+PenaltyBreakTemplateDeclaration: 10
+PenaltyExcessCharacter: 1000000
+PenaltyReturnTypeOnItsOwnLine: 60
+PointerAlignment: Right
+IndentPPDirectives : None
+ReflowComments:  true
+SortIncludes:    false
+SpacesBeforeTrailingComments: 2
+StatementMacros:
+  - Q_UNUSED
+  - QT_REQUIRE_VERSION
+IfMacros:
+  - EXM_TRY
+  - EXM_CATCH
+  - EXM_CATCH_ALL
+  - EXM_FINALLY
+WhitespaceSensitiveMacros:
+  - EXM_END_TRY
+TabWidth:        8
+UseCRLF:         false
+UseTab:          Never
+...
