@@ -38,53 +38,56 @@ FOR %%O in (%options%) DO FOR /f "tokens=1,* delims=:" %%A in ("%%O") DO (
     )
 )
 
-:loop
+:parse_loop
 :: Validate and store the options, one at a time, using a loop.
 :: Options start at arg 3 in this example. Each SHIFT is done starting at
 :: the first option so required args are preserved.
 ::
 if not "%~1"=="" (
-    set "opt=!options:*%~1:=! "
-    if "!opt!"=="!options! " (
-        rem No substitution was made so this is an invalid option.
-        rem Error handling goes here.
-        rem I will simply echo an error message.
-        echo Error: Invalid option %~1
-    ) else if "!opt:~0,1!"==" " (
-        rem Set the flag option using the option name.
-        rem The value is 1, because my other scripts expect numeric values and
-        rem are treating 1 and 0 like true and false.
-        set "%~1=1"
+    set opt=%~1
+    if /I "!opt:~0,3!"=="10." (
+        set "WINSSDK_VERSION=%1"
     ) else (
-        rem Set the option value using the option as the name.
-        rem and the next arg as the value
-        rem disable delayed expansion so that ! and ^ are preserved in option values.
-        setlocal disableDelayedExpansion
-        set "val=%~2"
-        call :escapeVal
-        setlocal enableDelayedExpansion
-        if "!val!"=="^=^^" (
-            REM The option was set to "", so unset it
-            endlocal & endlocal & set "%~1="
+        set "opt=!options:*%~1:=! "
+        if "!opt!"=="!options! " (
+            rem No substitution was made so this is an invalid option.
+            rem Error handling goes here.
+            rem I will simply echo an error message.
+            echo Error: Invalid option '%~1'
+        ) else if "!opt:~0,1!"==" " (
+            rem Set the flag option using the option name.
+            rem The value is 1, because other scripts expect numeric values and
+            rem are treating 1 and 0 like true and false.
+            set "%~1=1"
         ) else (
-            for /f delims^=^ eol^= %%A in ("!val!") do endlocal & endlocal & set "%~1=%%A" !
+            rem Set the option value using the option as the name.
+            rem and the next arg as the value
+            rem disable delayed expansion so that ! and ^ are preserved in option values.
+            setlocal disableDelayedExpansion
+            set "val=%~2"
+            call :escapeVal
+            setlocal enableDelayedExpansion
+            if "!val!"=="^=^^" (
+                REM The option was set to "", so unset it
+                endlocal & endlocal & set "%~1="
+            ) else (
+                for /f delims^=^ eol^= %%A in ("!val!") do endlocal & endlocal & set "%~1=%%A" !
+            )
         )
-        shift
     )
+    set opt=
     shift
-    goto :loop
-    REM goto :EOF
+    goto :parse_loop
 )
-goto :endArgs
+GOTO :endargs
 
 :escapeVal
 set "val=%val:^=^^%"
 set "val=%val:!=^!%"
-exit /b
+exit /b 0
 
 :endArgs
 if %trace% EQU 1 (
-    ECHO OPTIONS.CMD: options SET
     FOR %%O in (%options%) DO FOR /f "tokens=1,* delims=:" %%A in ("%%O") DO (
         ECHO %%A = !%%A!
     )
@@ -108,4 +111,5 @@ ENDLOCAL & (
     SET "vs2022=%vs2022%"
     SET "verbose=%verbose%"
     SET "trace=%trace%"
+    SET "WINSSDK_VERSION=%WINSSDK_VERSION%"
 )
