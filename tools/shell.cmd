@@ -104,6 +104,7 @@ ENDLOCAL & (
     SET "INCLUDE=%INCLUDE%"
     SET "LIB=%LIB%"
     SET "LIBPATH=%LIBPATH%"
+    SET "WINSSDK_VERSION=%WINSSDK_VERSION%"
     SET "UCRTVersion=%UCRTVersion%"
     SET "UniversalCRTSdkDir=%UniversalCRTSdkDir%"
     SET "VCIDEInstallDir=%VCIDEInstallDir%"

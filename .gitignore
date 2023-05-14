@@ -2,3 +2,6 @@
 
 # All build directories contain build artifacts that should never be checked in.
 build/
+
+# WinMerge
+*.bak

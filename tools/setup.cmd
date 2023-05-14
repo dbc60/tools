@@ -24,7 +24,8 @@ FOR /F "delims=" %%F IN ("!DIR_REPO!") DO (
     SET REPO_NAME=%%~nF
 )
 CALL :dequote !PROJECT_NAME!
-TITLE !result!
+SET PROJECT_NAME=!result!
+TITLE %PROJECT_NAME%
 
 SET DIR_COMMON_SCRIPTS=%DIR_REPO%\tools
 
@@ -184,6 +185,7 @@ ENDLOCAL & (
     SET "CommonLibrarianFlags=%CommonLibrarianFlags%"
 
     REM Export all command-line options except for win32
+    SET "PROJECT_NAME=%PROJECT_NAME%"
     SET "options=%options%"
     SET "build=%build%"
     SET "debug=%debug%"
@@ -208,6 +210,7 @@ ENDLOCAL & (
     SET "DIR_OUT_LIB=%DIR_OUT_LIB%"
     SET "DIR_OUT_BIN=%DIR_OUT_BIN%"
     SET "VSSOLUTION=%VSSOLUTION%"
+    SET "WINSSDK_VERSION=%WINSSDK_VERSION%"
 
     SET "VSINSTALLDIR=%VSINSTALLDIR%"
     SET "PATH=%PATH%"
