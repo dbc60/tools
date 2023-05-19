@@ -1,7 +1,8 @@
 # See https://git-scm.com/docs/gitignore for details
 
-# All build directories contain build artifacts that should never be checked in.
-build/
+# All directories contain build artifacts that should never be checked in.
+target/
+*.exe
 
 # WinMerge
 *.bak

@@ -3,10 +3,6 @@ SETLOCAL ENABLEDELAYEDEXPANSION ENABLEEXTENSIONS
 
 :: See LICENSE.txt for copyright and licensing information about this file.
 
-:: When this script runs, it sets these environment variables:
-::  VSSolution: the name of the subdirectory under "!DIR_REPO!\builds\" where
-::              the Visual Studion solution file is located.
-
 :: Set a variable for each default path
 SET "BUILD_TOOLS_PATH_VS2017CE=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build"
 SET "BUILD_TOOLS_PATH_VS2017Pro=C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Auxiliary\Build"
@@ -82,10 +78,8 @@ IF "!BUILD_TOOLS_PATH!"=="" (
 :: CALL 'vcvars64.bat' for the selected build tool and check for errors.
 IF NOT "!VSINSTALLDIR!" == "" GOTO :EOF
 IF %x64% EQU 1 (
-    ECHO CALLING "%BUILD_TOOLS_PATH%\vcvars64.bat" %WINSSDK_VERSION%
     CALL "%BUILD_TOOLS_PATH%\vcvars64.bat" %WINSSDK_VERSION%
 ) ELSE IF %x86% EQU 1 (
-    ECHO CALLING "%BUILD_TOOLS_PATH%\vcvars32.bat" %WINSSDK_VERSION%
     CALL "%BUILD_TOOLS_PATH%\vcvars32.bat" %WINSSDK_VERSION%
 )
 

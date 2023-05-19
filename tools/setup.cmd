@@ -27,7 +27,7 @@ CALL :dequote !PROJECT_NAME!
 SET PROJECT_NAME=!result!
 TITLE %PROJECT_NAME%
 
-SET DIR_COMMON_SCRIPTS=%DIR_REPO%\tools
+SET DIR_COMMON_SCRIPTS=tools
 
 CALL %DIR_COMMON_SCRIPTS%\options.cmd %*
 
@@ -91,7 +91,8 @@ if %trace% EQU 1 (
     )
 )
 
-SET DIR_BUILD=build
+:: The root directory for build artifacts
+SET DIR_BUILD=target
 if %debug% EQU 1 (
     SET BUILD_TYPE=debug
 ) else (
@@ -127,14 +128,14 @@ if %build% EQU 1 (
 ::  - BuildType is either debug or release.
 ::
 :: For example build artifacts for a 64-bit debug-build created with Visual
-:: Studio 2022 woule be written to "build\vs2022\x64\debug\".
-SET DIR_OUT_BASE=%DIR_REPO%\%DIR_BUILD%\%VSSOLUTION%
+:: Studio 2022 would be written to "target\vs2022\x64\debug\".
+SET DIR_OUT_BASE=%DIR_BUILD%\%VSSOLUTION%
 SET DIR_OUT_PLATFORM=!DIR_OUT_BASE!\!DIR_PLATFORM!
 SET DIR_OUT_BUILD=!DIR_OUT_PLATFORM!\%BUILD_TYPE%
 SET DIR_OUT_OBJ=!DIR_OUT_BUILD!\obj
 SET DIR_OUT_LIB=!DIR_OUT_BUILD!\lib
 SET DIR_OUT_BIN=!DIR_OUT_BUILD!\bin
-SET DIR_INCLUDE=%DIR_REPO%\include
+SET DIR_INCLUDE=include
 
 if %trace% EQU 1 (
     ECHO SET_ENV.CMD: DIR_INCLUDE       =!DIR_INCLUDE!
@@ -152,6 +153,7 @@ IF %cleanall% EQU 1 (
         IF EXIST %DIR_OUT_BASE% ECHO Deleting directory: %DIR_OUT_BASE%
     )
     IF EXIST %DIR_OUT_BASE% RD /S /Q %DIR_OUT_BASE%
+    IF EXIST *.exe DEL *.exe
 )
 
 :: Delete the artifacts from the platform configuration (32-bit/64-bit)
@@ -160,6 +162,7 @@ IF %clean% EQU 1 (
         IF EXIST %DIR_OUT_PLATFORM% ECHO Deleting directory: %DIR_OUT_PLATFORM%
     )
     IF EXIST %DIR_OUT_PLATFORM% RD /S /Q %DIR_OUT_PLATFORM%
+    IF EXIST *.exe DEL *.exe
 )
 
 :: Delete the artifacts from the current build type (debug/release)
@@ -202,7 +205,6 @@ ENDLOCAL & (
     SET "trace=%trace%"
 
     REM Local environment variables
-    SET "DIR_REPO=%DIR_REPO%"
     SET "DIR_BUILD=%DIR_BUILD%"
     SET "BUILD_TYPE=%BUILD_TYPE%"
     SET "DIR_INCLUDE=%DIR_INCLUDE%"
