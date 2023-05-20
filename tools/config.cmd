@@ -111,7 +111,7 @@ SET CommonCompilerFlags=/nologo /Zc:wchar_t /Zc:forScope /Zc:inline /Gd /Gm- ^
 
 :: Debug and optimized compiler flags
 SET CommonCompilerFlagsDEBUG=/MTd  /Zi /Od %CommonCompilerFlags%
-SET CommonCompilerFlagsOPTIMIZE=/MT /Zo /O2 /Oi /favor:blend ^
+SET CommonCompilerFlagsOPTIMIZE=/D NDEBUG /MT /Zo /O2 /Oi /favor:blend ^
     %CommonCompilerFlags%
 
 :: Preprocessor definitions for a Library build

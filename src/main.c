@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 // just something to compile
-int main() {
+int
+main() {
     printf("%s\n", "Hello World");
 }
